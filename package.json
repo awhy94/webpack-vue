@@ -4,7 +4,8 @@
   "description": "study webpack and vue",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --hot --open --config build/webpack.dev.config.js"
+    "dev": "webpack-dev-server --hot --open --config build/webpack.dev.config.js",
+    "build": "webpack --config build/webpack.prod.config.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "vuex": "^3.1.1"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.6.10",
