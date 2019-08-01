@@ -1,7 +1,9 @@
 <template>
   <div class="demo01-app">
     demo01
-    <p class="demo01-app_title">title</p>
+    <p class="demo01-app_title">
+      title
+    </p>
   </div>
 </template>
 <script>

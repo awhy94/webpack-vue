@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-const Demo01 = () => import(/* webpackChunkName: 'Demo01' */'@/app/demo01/components/Demo01App.vue')
+const Demo01 = () => import(/* webpackChunkName: 'Demo01' */'@/app/demo01/components/Demo01App.vue');
 
 const router = new VueRouter({
   mode: 'history',
@@ -15,12 +15,10 @@ const router = new VueRouter({
   }, {
     name: 'default',
     path: '*',
-    redirect: () => {
-      return {
-        name: 'demo01',
-      }
-    },
-  }]
+    redirect: () => ({
+      name: 'demo01',
+    }),
+  }],
 });
 
 export default router;

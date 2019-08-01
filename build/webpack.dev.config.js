@@ -23,7 +23,7 @@ module.exports = {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
       '@': SRC_PATH,
-    }
+    },
   },
   devServer: {
     host: '0.0.0.0',
@@ -48,22 +48,22 @@ module.exports = {
             options: {
               importLoaders: 1,
               sourceMap: true,
-            }
+            },
           },
           {
             loader: 'postcss-loader',
             options: {
               plugins: [
                 autoprefixer({
-                  browsers: ['last 2 versions']
+                  browsers: ['last 2 versions'],
                 }),
               ],
-            }
+            },
           },
           'sass-loader',
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
   plugins: [
     new VueLoaderPlugin(),
@@ -72,5 +72,5 @@ module.exports = {
       filename: 'index.html',
       template: path.resolve(SRC_PATH, 'index.html'),
     }),
-  ]
-}
+  ],
+};

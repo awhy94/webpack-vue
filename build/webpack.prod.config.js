@@ -7,10 +7,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const postcsspxtoviewport = require('postcss-px-to-viewport');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
 const SRC_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'public');
+
 
 module.exports = {
   mode: 'development',
@@ -60,7 +62,7 @@ module.exports = {
               ],
             },
           },
-        ]
+        ],
       },
       {
         test: /\.(sa|sc)ss$/,
@@ -73,12 +75,12 @@ module.exports = {
             options: {
               plugins: [
                 autoprefixer(),
-                // cssnano({
-                //   preset: 'default',
-                //   autoprefixer: false,
-                //   'postcss-zindex': false,
-                //   'postcss-reduce-idents': false,
-                // }),
+                cssnano({
+                  preset: 'default',
+                  autoprefixer: false,
+                  'postcss-zindex': false,
+                  'postcss-reduce-idents': false,
+                }),
                 postcsspxtoviewport({
                   viewportWidth: 750,
                   viewportHeight: 1334,
@@ -92,8 +94,8 @@ module.exports = {
             },
           },
           'sass-loader',
-        ]
-      }
+        ],
+      },
     ],
   },
   plugins: [
@@ -102,6 +104,7 @@ module.exports = {
       cleanOnceBeforeBuildPatterns: [
         'js/*.js',
         'css/*.css',
+        'html/*.html',
       ],
     }),
     new VueLoaderPlugin(),
@@ -113,6 +116,17 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash].css',
       chunkFilename: 'css/[name].bundle.[hash].css',
+    }),
+    new webpack.DllReferencePlugin({
+      context: ROOT_PATH,
+      manifest: path.resolve(BUILD_PATH, 'dll/vendors_prod.manifest.json'),
+    }),
+    new AddAssetHtmlPlugin({
+      filepath: [
+        path.resolve(BUILD_PATH, 'dll/vendors_prod.*.js'),
+      ],
+      outputPath: './dll',
+      publicPath: '../',
     }),
   ],
 };
