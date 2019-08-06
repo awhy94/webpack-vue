@@ -1,14 +1,26 @@
 <template>
   <div class="demo01-app">
-    demo01
-    <p class="demo01-app_title">
+    demo02
+    <p
+      class="demo01-app_title"
+      @click="onClickTest"
+    >
       title
     </p>
+    <test />
   </div>
 </template>
 <script>
-export default {
+import Test from './Test';
 
+export default {
+  components: {
+    Test,
+  },
+  methods: {
+    onClickTest() {
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

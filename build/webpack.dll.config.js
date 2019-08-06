@@ -29,12 +29,16 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [
+      cleanOnceBeforeBuildPatterns:
+      isProd ? [
         'dll/*.js',
         'dll/*.json',
         'js/*.js',
         'css/*.css',
         'html/*.html',
+      ] : [
+        `vendors_${envFlag}.js`,
+        `vendors_${envFlag}.manifest.json`,
       ],
     }),
     new webpack.DllPlugin({

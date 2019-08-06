@@ -8,6 +8,7 @@ const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const postcsspxtoviewport = require('postcss-px-to-viewport');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
 const SRC_PATH = path.resolve(ROOT_PATH, 'src');
@@ -15,7 +16,7 @@ const BUILD_PATH = path.resolve(ROOT_PATH, 'public');
 
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   context: ROOT_PATH,
   stats: {
     children: false,
@@ -33,6 +34,12 @@ module.exports = {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
       '@': SRC_PATH,
+    },
+  },
+  optimization: {
+    minimize: false,
+    splitChunks: {
+      minSize: 0,
     },
   },
   devServer: {
@@ -127,6 +134,9 @@ module.exports = {
       ],
       outputPath: './dll',
       publicPath: '../',
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer',
     }),
   ],
 };
