@@ -93,6 +93,18 @@ module.exports = {
           'sass-loader',
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif|svg|woff2?|eot|ttf|otf)(\?\S*)?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 4096,
+              name: '[path][name].[ext]?[hash:8]',
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [

@@ -103,6 +103,38 @@ module.exports = {
           'sass-loader',
         ],
       },
+      {
+        test: /\.(svg|png|jpe?g|gif)(\?\S*)?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 4096,
+              context: SRC_PATH,
+              name: '[path][name].[ext]?[hash:8]',
+              outputPath: 'images/',
+              // publicPath: `${PUBLIC_PATH}images/`,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?\S*)?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 4096,
+              context: SRC_PATH,
+              name: '[path][name].[ext]?[hash:8]',
+              outputPath: 'others/',
+              // publicPath: `${PUBLIC_PATH}others/`,
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
