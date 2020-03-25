@@ -12,6 +12,7 @@ const vendors = [
   'vue/dist/vue.esm.js',
   'vuex',
   'vue-router',
+  'fastclick',
 ];
 module.exports = {
   mode: isProd ? 'production' : 'development',

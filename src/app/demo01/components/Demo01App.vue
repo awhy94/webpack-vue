@@ -1,7 +1,43 @@
 <template>
   <div class="demo01-app">
+    <div class="title" id="title">
+      <span class="title_span">span</span>
+    </div>
+    <Button />
+    <div class="box-wrap">
+      <div class="small-box" />
+      <div class="small-box" />
+      <div class="small-box" />
+      <div class="small-box" />
+    </div>
+    <div class="flex-box">
+      <div class="flex-box-item"></div>
+      <div class="flex-box-item"></div>
+      <div class="flex-box-item"></div>
+      <div class="flex-box-item"></div>
+      <div class="flex-box-item"></div>
+      <div class="flex-box-item"></div>
+    </div>
+    <iframe
+      id="test"
+      src="http://0.0.0.0:8080/demo01"
+    />
+    <iframe
+      id="test2"
+      src="https://www.baidu.com"
+    />
+    <div class="container">
+      <div class="parent">
+        <div class="item" />
+        <div class="item" />
+      </div>
+      <div class="parent">
+        <div class="item" />
+        <div class="item" />
+      </div>
+    </div>
     <p class="demo01-app__title">
-      input失去焦点问题
+      input失去焦点问题2
     </p>
     <p class="demo01-app__title">
       input失去焦点问题
@@ -227,6 +263,26 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+div {
+  width: 200px;
+  height: 200px;
+}
+#title {
+  background: red;
+}
+div.title {
+  background: yellow;
+}
+.title .title_span {
+  color: pink;
+}
+#title .title_span {
+  color: blue;
+}
+div.title .title_span {
+  color: black
+}
+
 .demo01-app {
   width: 100%;
   &__title {
@@ -289,4 +345,56 @@ export default {
     }
   }
 }
+.box-wrap {
+  width: 400px;
+  height: 400px;
+  background: red;
+  display: flex;
+
+  .small-box {
+    width: 200px;
+    height: 200px;
+    flex: 1;
+    flex-shrink: 0;
+    background: yellow;
+  }
+}
+
+.container{
+    display: flex;
+    // flex-flow: column
+    flex-direction: column;
+    width: 500px;/*任意改变长宽*/
+    height: 500px;
+    background:#ccc;
+    padding: 12px;
+  }
+  .parent{
+    display: flex;
+    // flex-flow:row nowrap;
+    flex:1;/*元素弹性*/
+  }
+    .container .parent:first-child{margin-bottom: 12px;}
+    .item{
+        flex:1;/*元素弹性*/
+        background: green;
+    }
+    .parent .item:first-child{margin-right: 12px;}
+
+  .flex-box {
+    width: 200px;
+    height: 150px;
+    background-color: black;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    .flex-box-item {
+      box-sizing: border-box;
+      background-color: white;
+      flex: 0 0 25%;
+      height: 50px;
+      border: 1px solid red;
+      // margin-right: 1px;
+    }
+  }
 </style>

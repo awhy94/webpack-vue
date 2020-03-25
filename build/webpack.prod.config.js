@@ -9,6 +9,7 @@ const cssnano = require('cssnano');
 const postcsspxtoviewport = require('postcss-px-to-viewport');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
 const SRC_PATH = path.resolve(ROOT_PATH, 'src');
@@ -25,8 +26,8 @@ module.exports = {
     app: path.resolve(SRC_PATH, 'app.js'),
   },
   output: {
-    filename: 'js/[name].[hash].js',
-    chunkFilename: 'js/[name].bundle.[hash].js',
+    filename: 'js/[name].[chunkhash].js',
+    chunkFilename: 'js/[name].bundle.[chunkhash].js',
     path: BUILD_PATH,
   },
   resolve: {
@@ -37,10 +38,21 @@ module.exports = {
     },
   },
   optimization: {
-    minimize: false,
+    minimize: true,
+    minimizer: [new UglifyJsPlugin({
+      parallel: true,
+      uglifyOptions: {
+        compress: {
+          drop_console: true,
+        },
+      },
+    })],
     splitChunks: {
-      minSize: 0,
+      // minSize: 0,
     },
+    runtimeChunk: {
+      name: 'manifest'
+    }
   },
   devServer: {
     host: '0.0.0.0',
@@ -54,6 +66,35 @@ module.exports = {
         test: /\.vue$/,
         exclude: /node_modules/,
         loader: 'vue-loader',
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            ['@babel/preset-env', {
+              useBuiltIns: 'usage',
+              corejs: 3,
+              targets: '> 0.1%, last 4 major versions, iOS >= 8, Android >= 4',
+              modules: false,
+            }],
+          ],
+          plugins: [
+            '@babel/plugin-syntax-dynamic-import',
+            '@babel/plugin-proposal-object-rest-spread',
+            ['@babel/plugin-proposal-decorators', {
+              legacy: true,
+            }],
+            ['@babel/plugin-proposal-class-properties', {
+              loose: true,
+            }],
+            ["import", {
+              "libraryName": "vue-kit-test",
+              "libraryDirectory": "dist",
+            }]
+          ],
+        },
       },
       {
         test: /\.css$/,
@@ -153,8 +194,8 @@ module.exports = {
       template: path.resolve(SRC_PATH, 'index.html'),
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[hash].css',
-      chunkFilename: 'css/[name].bundle.[hash].css',
+      filename: 'css/[name].[chunkhash].css',
+      chunkFilename: 'css/[name].bundle.[chunkhash].css',
     }),
     new webpack.DllReferencePlugin({
       context: ROOT_PATH,
@@ -170,5 +211,6 @@ module.exports = {
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer',
     }),
+    // new webpack.HashedModuleIdsPlugin(),
   ],
 };

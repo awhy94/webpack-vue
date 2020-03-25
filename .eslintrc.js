@@ -14,6 +14,14 @@ module.exports = {
     'import/extensions': [1, 'ignorePackages', { 'js': 'never' }],
     'no-empty': [2, { allowEmptyCatch: true }],
     'no-bitwise': [0],
+    "import/no-anonymous-default-export": ["error", {
+      "allowArrowFunction": true,
+      "allowAnonymousClass": true,
+      "allowAnonymousFunction": true,
+      "allowLiteral": true,
+      "allowObject": false,
+      "allowArray": true
+    }]
   },
   plugins: ["import", "vue"],
   parserOptions: {

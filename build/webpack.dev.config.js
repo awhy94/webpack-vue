@@ -124,6 +124,8 @@ module.exports = {
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer',
     }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devtool: 'cheap-module-eval-source-map',
 };
